@@ -1,0 +1,6 @@
+.full-image-popup__pic{
+    max-width: 80vw;
+    max-height: 80vh;
+    user-select:none;
+    border-radius: 10px;
+}
