@@ -1,13 +1,4 @@
-const serverData = {
-    baseUrl: 'http://95.216.175.5/cohort5',
-    headers: {
-        authorization: '0d37a330-306d-4e7c-a539-b36cb777efcc',
-        'Content-Type': 'application/json'
-    }
-};
-
-
-class Api {
+export class Api {
     constructor(options) {
         this.options = options;
         this.getInitialCards = this.getInitialCards.bind(this);

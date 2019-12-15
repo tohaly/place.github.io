@@ -1,9 +1,11 @@
-class Card {
+import {api} from './index.js';
+
+export class Card {
     constructor(item) {
         this.element = this.create(item);
         this.listeners();
     }
-    create (item){
+    create(item) {
         let element = document.createElement('div');
         const cradString = `
             <div class="place-card" id = ${item._id}>

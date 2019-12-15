@@ -1,9 +1,22 @@
+import '../pages/index.css';
+import { Api } from './api';
+import { CardList } from './cardList.js';
+import './popupsData';
+import { FullImgPopup, AddCardPopup, EditProfilePopup, AvatarPopup } from './popup.js';
+import { Validation } from './validation.js';
+
+const serverUrl = NODE_ENV === 'development' ? 'http://praktikum.tk/cohort5' : 'https://praktikum.tk/cohort5';
+const serverData = {
+    baseUrl: serverUrl,
+    headers: {
+        authorization: '0d37a330-306d-4e7c-a539-b36cb777efcc',
+        'Content-Type': 'application/json'
+    }
+};
 const popupBlock = document.querySelector('.popup');
 const placeList = document.querySelector('.places-list');
-const cards = [];
-const cardList = new CardList(placeList, cards);
-
-
+export const cards = [];
+export const cardList = new CardList(placeList, cards);
 const api = new Api(serverData);
 
 function getUserInfo(result) {
@@ -18,13 +31,13 @@ function getUserInfo(result) {
 
 api.getInitialCards()
     .then(result => {
-        cardList.getCardsFromServer(result)
+        cardList.getCardsFromServer(result);
     })
     .catch(err => console.log(`${err}. Возникла проблема с загрузкой карточек с сервера.`));
 
 api.getUserInfo()
     .then(result => {
-    getUserInfo(result)
+        getUserInfo(result);
     })
     .catch(err => {
         console.log(`${err}. Проблема в получении данных пользователя.`);
@@ -74,3 +87,5 @@ document.querySelector('.user-info__photo').addEventListener('click', (event) =>
     const valid = new Validation(document.querySelector('.popup__form'));
     valid.render();
 });
+
+export {api};

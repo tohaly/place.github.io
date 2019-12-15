@@ -1,4 +1,7 @@
-class CardList {
+import { Card } from './card.js';
+import { cards } from './index.js';
+
+export class CardList {
     constructor(container, list) {
         this.container = container;
         this.list = list;    

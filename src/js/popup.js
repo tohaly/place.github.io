@@ -1,3 +1,6 @@
+import { api } from './index.js';
+import { cardList } from './index.js';
+
 class Popup {
     constructor (container, popup) {
         this.popup = popup;
@@ -80,8 +83,6 @@ class AddCardPopup extends Popup {
         card._id = data._id;
         card.owner = true;
         card.IsOwnLike = false;
-
-        console.log(card);
 
         cardList.addCard(card)
     }
@@ -175,3 +176,5 @@ class AvatarPopup extends Popup {
         });                
     }
 }
+
+export { FullImgPopup, AddCardPopup, EditProfilePopup, AvatarPopup };
