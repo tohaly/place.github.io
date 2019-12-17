@@ -1,8 +1,8 @@
 import closeImage from '../images/close.svg';
 
 (function () {
-  const popupsData = {
-    addPopup: `
+    const popupsData = {
+        addPopup: `
         <div class="popup__content">
         <img src="${closeImage}" alt="" class="popup__close">
         <h3 class="popup__title">Новое место</h3>
@@ -14,7 +14,7 @@ import closeImage from '../images/close.svg';
             <button type="button" class="button popup__button" name = 'createButton' disabled>+</button>
         </form>
         </div>`,
-    editPopup: `
+        editPopup: `
         <div class="popup__content">
             <img src="${closeImage}" alt="" class="popup__close">
             <h3 class="popup__title">Редактировать профиль</h3>
@@ -26,12 +26,12 @@ import closeImage from '../images/close.svg';
                 <button type="submit" class="button popup__button popup__button_edit-profile" name='confirmChanges' disabled>Сохранить</button>
             </form>
         </div>`,
-    fullImgPopup: `
+        fullImgPopup: `
         <div class="popup__form full-image-popup__content">
             <img src="${closeImage}" alt="" class="popup__close">
             <img src="" alt="" class="full-image-popup__pic">
         </div>`,
-    avatar: `
+        avatar: `
         <div class="popup__content">
             <img src="${closeImage}" alt="" class="popup__close">
             <h3 class="popup__title">Изменить автар</h3>
@@ -41,7 +41,7 @@ import closeImage from '../images/close.svg';
                 <button type="submit" class="button popup__button popup__button_avatar popup__button_edit-profile" name='confirmChanges' disabled>Сохранить</button>
             </form>
         </div>`,
-  };
+    };
 
-  window.popupsData = popupsData;
+    window.popupsData = popupsData;
 }());
