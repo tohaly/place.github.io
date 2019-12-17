@@ -1,10 +1,13 @@
-class Card {
+import { api } from './index';
+
+export default class Card {
     constructor(item) {
         this.element = this.create(item);
         this.listeners();
     }
-    create (item){
-        let element = document.createElement('div');
+
+    create(item) {
+        const element = document.createElement('div');
         const cradString = `
             <div class="place-card" id = ${item._id}>
                 <div class="place-card__image">
@@ -19,26 +22,26 @@ class Card {
                     </div>
                 </div>
             </div>`;
-        
+
         element.insertAdjacentHTML('beforeend', cradString.trim());
         element.querySelector('.place-card__name').textContent = item.name;
         element.querySelector('.place-card__image').style.backgroundImage = `url(${item.link})`;
         element.querySelector('.place-card__likes-numb').textContent = item.likes;
-        
+
         this.renderDelButtob(item.owner, element);
-        this.renderIsLiked(item.IsOwnLike, element);        
+        this.renderIsLiked(item.IsOwnLike, element);
 
         return element.firstChild;
     }
 
     renderIsLiked(isLikes, element) {
-        if(isLikes) {
+        if (isLikes) {
             element.querySelector('.place-card__like-icon').classList.add('place-card__like-icon_liked');
         }
     }
 
     renderDelButtob(isOwn, element) {
-        if(!isOwn) {
+        if (!isOwn) {
             element.querySelector('.place-card__image').removeChild(element.querySelector('.place-card__delete-icon'));
         }
     }
@@ -54,9 +57,9 @@ class Card {
     }
 
     renderLoadingStart() {
-        if (event.target.classList.contains('place-card__like-icon')){
-                event.path[1].querySelector('.place-card__spinner').classList.add('place-card__spinner_visible');
-                event.path[1].querySelector('.place-card__likes-numb').textContent = '';      
+        if (event.target.classList.contains('place-card__like-icon')) {
+            event.path[1].querySelector('.place-card__spinner').classList.add('place-card__spinner_visible');
+            event.path[1].querySelector('.place-card__likes-numb').textContent = '';
         }
     }
 
@@ -64,13 +67,13 @@ class Card {
         event.path[1].querySelector('.place-card__spinner').classList.remove('place-card__spinner_visible');
     }
 
-    like(event) {                  
-        if (event.target.classList.contains('place-card__like-icon')){
+    like(event) {
+        if (event.target.classList.contains('place-card__like-icon')) {
             this.renderLoadingStart(true);
-            if(event.target.classList.contains('place-card__like-icon_liked')){
+            if (event.target.classList.contains('place-card__like-icon_liked')) {
                 api.removeLike(event.path[3].id)
-                    .then(result => {
-                        this.renderNumbLikes(event, result.likes.length);                        
+                    .then((result) => {
+                        this.renderNumbLikes(event, result.likes.length);
                     })
                     .catch((err) => {
                         this.renderErrLike(event.path[3].id);
@@ -79,43 +82,41 @@ class Card {
                     })
                     .finally(() => {
                         this.renderLoadingEnd(event);
-                    });                
+                    });
             } else {
                 api.addLike(event.path[3].id)
-                .then(result => {
-                    this.renderNumbLikes(event, result.likes.length);
-                })
-                .catch(() => {                        
-                    this.renderLoadingEnd(event);
-                    this.renderErrLike(event.path[3].id);
-                })
-                .finally(() => {
-                    this.renderLoadingEnd(event);
-                });
-            }      
+                    .then((result) => {
+                        this.renderNumbLikes(event, result.likes.length);
+                    })
+                    .catch(() => {
+                        this.renderLoadingEnd(event);
+                        this.renderErrLike(event.path[3].id);
+                    })
+                    .finally(() => {
+                        this.renderLoadingEnd(event);
+                    });
+            }
         }
     }
 
     removeCard(event) {
-        if (window.confirm("Вы действительно хотите удалить публикацию?")) {
-            const card = event.target.closest('.place-card');
-            card.parentNode.removeChild(card); 
-        }            
+        const card = event.target.closest('.place-card');
+        card.parentNode.removeChild(card);
     }
 
     rednderRemoveCard(event) {
-        if (event.target.classList.contains('place-card__delete-icon')) {
+        if (event.target.classList.contains('place-card__delete-icon') && window.confirm('Вы действительно хотите удалить публикацию?')) {
             api.deleteCard(event.path[2].id)
-            .then(() => this.removeCard(event))
-            .catch(err => console.log(err));
+                .then(() => this.removeCard(event))
+                .catch((err) => console.log(err));
         }
     }
 
     listeners() {
-        this.element.addEventListener('click', event => {
+        this.element.addEventListener('click', (event) => {
             this.like(event);
         });
-        this.element.addEventListener('click', event => {
+        this.element.addEventListener('click', (event) => {
             this.rednderRemoveCard(event);
         });
     }

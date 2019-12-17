@@ -1,5 +1,7 @@
+import { api, cardList } from './index';
+
 class Popup {
-    constructor (container, popup) {
+    constructor(container, popup) {
         this.popup = popup;
         this.container = container;
     }
@@ -13,7 +15,7 @@ class Popup {
 
         return popup.firstChild;
     }
-    
+
     removePopup() {
         this.container.classList.remove('popup_is-opened');
         this.container.innerHTML = '';
@@ -25,14 +27,14 @@ class Popup {
     }
 
     close(event) {
-        if(event.target.classList.contains('popup__close')){
+        if (event.target.classList.contains('popup__close')) {
             this.removePopup();
-        }        
+        }
     }
 
     startLoading() {
         const button = document.querySelector('.popup__button');
-        const loadingText = 'Загрузка...'
+        const loadingText = 'Загрузка...';
 
         button.textContent = loadingText;
     }
@@ -48,7 +50,7 @@ class Popup {
         this.container.addEventListener('click', (event) => {
             this.close(event);
         });
-    } 
+    }
 }
 
 class FullImgPopup extends Popup {
@@ -72,7 +74,7 @@ class AddCardPopup extends Popup {
     }
 
     renderCard(data) {
-        const card = {}
+        const card = {};
 
         card.name = data.name;
         card.link = data.link;
@@ -81,13 +83,11 @@ class AddCardPopup extends Popup {
         card.owner = true;
         card.IsOwnLike = false;
 
-        console.log(card);
-
-        cardList.addCard(card)
+        cardList.addCard(card);
     }
 
     hideListeners() {
-        document.querySelector('.popup__button').addEventListener('click', event => {
+        document.querySelector('.popup__button').addEventListener('click', (event) => {
             event.preventDefault();
 
             const name = document.forms.new.elements.name.value;
@@ -95,11 +95,12 @@ class AddCardPopup extends Popup {
 
             this.startLoading();
             this.chengeFontSize('18px');
-            
+
             api.addNewCard(name, link)
-                .then(result => {
-                    this.renderCard(result)})
-                .catch(err => console.log(`${err}. Карточка не загружена.`))
+                .then((result) => {
+                    this.renderCard(result);
+                })
+                .catch((err) => console.log(`${err}. Карточка не загружена.`))
                 .finally(() => {
                     this.endLoading('+');
                 });
@@ -107,7 +108,7 @@ class AddCardPopup extends Popup {
     }
 }
 
-class EditProfilePopup extends Popup{
+class EditProfilePopup extends Popup {
     getCurrentProfile() {
         const form = document.forms.editProfile;
         const enteredName = form.elements.userName;
@@ -119,7 +120,7 @@ class EditProfilePopup extends Popup{
         enteredJob.value = job.textContent;
     }
 
-    editProfile(name, about) {        
+    editProfile(name, about) {
         const userName = document.querySelector('.user-info__name');
         const job = document.querySelector('.user-info__job');
 
@@ -128,7 +129,7 @@ class EditProfilePopup extends Popup{
     }
 
     hideListeners() {
-        document.querySelector('.popup__button').addEventListener('click', () => {            
+        document.querySelector('.popup__button').addEventListener('click', () => {
             event.preventDefault();
 
             const form = document.forms.editProfile;
@@ -138,14 +139,14 @@ class EditProfilePopup extends Popup{
             this.startLoading();
 
             api.changeUserInfo(enteredName.value, enteredJob.value)
-                .then(result => {
+                .then((result) => {
                     this.editProfile(result.name, result.about);
                 })
-                .catch(err => console.log(`${err}. Данные пользователя не изменены.`))
+                .catch((err) => console.log(`${err}. Данные пользователя не изменены.`))
                 .finally(() => {
                     this.endLoading('Сохранить');
                 });
-        });                
+        });
     }
 }
 
@@ -156,22 +157,26 @@ class AvatarPopup extends Popup {
     }
 
     hideListeners() {
-        document.querySelector('.popup__button').addEventListener('click', (event) => {            
+        document.querySelector('.popup__button').addEventListener('click', (event) => {
             event.preventDefault();
-            
+
             const form = document.forms.EditAvatar;
             const input = form.elements.avatar;
 
             this.startLoading();
 
             api.changeAvatar(input.value)
-                .then(result => {
-                    this.changeAvatar(result.avatar);            
+                .then((result) => {
+                    this.changeAvatar(result.avatar);
                 })
-                .catch(err => console.log(`${err}. Аватар не изменен.`))
+                .catch((err) => console.log(`${err}. Аватар не изменен.`))
                 .finally(() => {
                     this.endLoading('Сохранить');
-                });                
-        });                
+                });
+        });
     }
 }
+
+export {
+    FullImgPopup, AddCardPopup, EditProfilePopup, AvatarPopup,
+};

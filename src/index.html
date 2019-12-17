@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./pages/index.css">
-  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+  <link rel="shortcut icon" href="<%=require('./favicon.ico')%>">
 </head>
 <body>
   <div class="root">
     <header class="header root__section">
-      <img src="./images/logo.svg" alt="mesto logo" class="logo">
+      <img src="${require(`./images/logo.svg`)}" alt="mesto logo" class="logo">
     </header>
     <div class="profile root__section">
       <div class="user-info">
@@ -25,7 +25,6 @@
       </div>
     </div>
     <div class="places-list root__section">
-
       <!-- Пример вёрстки карточки: 
 
       <div class="place-card">
@@ -46,13 +45,6 @@
       конец примера. -->
     </div>
     <div class="popup"></div>
-    <script src="./js/api.js"></script>
-    <script src="./js/initialCards.js"></script>
-    <script src="./js/popupsData.js"></script>
-    <script src="./js/card.js"></script>
-    <script src="./js/cardList.js"></script>
-    <script src="./js/popup.js"></script>
-    <script src="./js/validation.js"></script>
-    <script src="./js/index.js"></script>
+    <script type="module" src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
 </body>
 </html>
