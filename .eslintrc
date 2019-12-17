@@ -3,5 +3,24 @@
   "env": {
     "browser": true,
     "node": true
-  }
+  },
+  "rules": {
+        "id-length": 0,
+        "indent": [1, 4],
+        "no-console": 0,
+        "no-unused-vars": [1, {"vars": "local", "args": "none"}],
+        "strict": 0,
+        "class-methods-use-this": 0,
+        "no-restricted-globals": 0,
+        "no-underscore-dangle": 0,
+        "no-param-reassign": 0,
+        "max-classes-per-file": 0,
+        "no-useless-constructor": 0,
+        "import/no-cycle": 0,
+        "prefer-promise-reject-errors": 0,
+        "no-alert": 0,
+        "func-names": 0,
+        "no-undef": 0,
+        "max-len": 0
+    }
 }

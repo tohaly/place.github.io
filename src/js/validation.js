@@ -1,60 +1,60 @@
-export class Validation {
-  constructor(element) {
-    this.element = element;
-  }
-
-  inputValid(input, message) {
-    if (input.type === 'url' && !input.validity.valid) {
-      message.textContent = 'Здесь должна быть ссылка';
-      return false;
+export default class Validation {
+    constructor(element) {
+        this.element = element;
     }
-    if (input.validity.tooShort || input.validity.tooLong) {
-      message.textContent = 'Должно быть от 2 до 30 символов';
-      return false;
-    } if (input.validity.valueMissing) {
-      message.textContent = 'Это обязательное поле';
-      return false;
+
+    inputValid(input, message) {
+        if (input.type === 'url' && !input.validity.valid) {
+            message.textContent = 'Здесь должна быть ссылка';
+            return false;
+        }
+        if (input.validity.tooShort || input.validity.tooLong) {
+            message.textContent = 'Должно быть от 2 до 30 символов';
+            return false;
+        } if (input.validity.valueMissing) {
+            message.textContent = 'Это обязательное поле';
+            return false;
+        }
+        message.textContent = ' ';
+        return true;
     }
-    message.textContent = ' ';
-    return true;
-  }
 
-  formValid(input) {
-    if (input.type === 'url' && !input.validity.valid) {
-      return false;
+    formValid(input) {
+        if (input.type === 'url' && !input.validity.valid) {
+            return false;
+        }
+        if (input.validity.tooShort || input.validity.tooLong) {
+            return false;
+        } if (input.validity.valueMissing) {
+            return false;
+        }
+        return true;
     }
-    if (input.validity.tooShort || input.validity.tooLong) {
-      return false;
-    } if (input.validity.valueMissing) {
-      return false;
+
+    switchButton() {
+        const button = document.querySelector('.popup__button');
+
+        if (!this.formValid(this.element.elements[0]) || !this.formValid(this.element.elements[1])) {
+            button.setAttribute('disabled', true);
+            button.classList.remove('popup__button_active');
+        } else {
+            button.removeAttribute('disabled');
+            button.classList.add('popup__button_active');
+        }
     }
-    return true;
-  }
 
-  switchButton() {
-    const button = document.querySelector('.popup__button');
+    render() {
+        const firstMessage = this.element.querySelector('.popup__error-message_first');
+        const secondMessage = this.element.querySelector('.popup__error-message_second');
 
-    if (!this.formValid(this.element.elements[0]) || !this.formValid(this.element.elements[1])) {
-      button.setAttribute('disabled', true);
-      button.classList.remove('popup__button_active');
-    } else {
-      button.removeAttribute('disabled');
-      button.classList.add('popup__button_active');
+        this.element.elements[0].addEventListener('input', () => {
+            this.inputValid(this.element.elements[0], firstMessage);
+        });
+        this.element.elements[1].addEventListener('input', () => {
+            this.inputValid(this.element.elements[1], secondMessage);
+        });
+        document.forms[0].addEventListener('input', () => {
+            this.switchButton();
+        });
     }
-  }
-
-  render() {
-    const firstMessage = this.element.querySelector('.popup__error-message_first');
-    const secondMessage = this.element.querySelector('.popup__error-message_second');
-
-    this.element.elements[0].addEventListener('input', () => {
-      this.inputValid(this.element.elements[0], firstMessage);
-    });
-    this.element.elements[1].addEventListener('input', () => {
-      this.inputValid(this.element.elements[1], secondMessage);
-    });
-    document.forms[0].addEventListener('input', () => {
-      this.switchButton();
-    });
-  }
 }
