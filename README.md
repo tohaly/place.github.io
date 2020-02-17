@@ -30,7 +30,7 @@
 
 ## Ссылка на проект
 
-https://tohaly.github.io/places.github.io/
+https://tohaly.github.io/place.github.io/
 
 ## Локальный запуск
 
